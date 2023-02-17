@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <!--    Не забудьте импортировать css файл. Удалите эту строчку-->
-    <!--    Не забудьте импортировать js файл. Всегда используйте атрибут defer в теге script при импорте js файла. Удалите эту строчку-->
+  <head>
+    <meta charset="UTF-8" />
+    <script defer src="index.js"></script>
+    <link rel="stylesheet" href="./css/index.css" />
     <title>Транслит</title>
-</head>
-<body>
-
-</body>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <h1>T.R.A.N.S.L.I.T</h1>
+      </div>
+      <div class="search-box">
+        <form>
+          <input
+            type="text"
+            class="search"
+            placeholder="Начните вводить текст"
+          />
+          <button class="btn">Перевести</button>
+        </form>
+      </div>
+      <div class="container">
+        <div class="table">
+          <div class="column1">
+            <div class="word">
+              <div class="number">1.</div>
+              <div class="cyrillic">Привет<span> &#128075;</span></div>
+            </div>
+          </div>
+          <div class="column2">
+            <div class="translit">Privet</div>
+            <div class="uninstall">
+              <img src="icons/Group1.png" alt="delete icon" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clear">
+        <div class="uninstall"></div>
+        <button class="btn2">
+          <img src="icons/Group7.png" alt="" /> Очистить всё
+        </button>
+      </div>
+    </div>
+  </body>
 </html>
