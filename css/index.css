@@ -135,4 +135,38 @@ form {
   justify-content: space-between;
   width: 95%;
 }
-
+/*! Мобильная версия */
+@media (min-width: 0px) and (max-width: 360px) {
+  .table {
+    flex-direction: column;
+    align-items: center;
+  }
+  .column1 {
+    border: rgb(60, 117, 60) solid 1px;
+    border-radius: 8px 8px 0 0;
+    font-size: 20px;
+    padding: 2px;
+    justify-content: center;
+  }
+  .column2 {
+    border: rgb(60, 117, 60) solid 1px;
+    border-radius: 0;
+    font-size: 20px;
+    padding: 2px;
+    justify-content: center;
+  }
+  .translit {
+    justify-content: space-evenly;
+  }
+  .search {
+    width: 250px;
+    font-size: 20px;
+    letter-spacing: -2px;
+  }
+  .header {
+    font-size: small;
+  }
+  .container {
+    width: 250px;
+  }
+}
