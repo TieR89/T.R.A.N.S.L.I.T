@@ -80,24 +80,20 @@ form {
 .column1,
 .column2 {
   display: flex;
+  justify-content: space-between;
   border: rgb(60, 117, 60) solid 2px;
+  font-size: 20px;
+  padding: 5px;
+  height: 35px;
+  width: 250px;
 }
 .column1 {
-  border-radius: 8px 0 0;
+  border-radius: 8px 0 0 8px;
   background-color: #e2e2e2;
-  width: 250px;
-  border-right: 10px;
-  height: 35px;
-  font-size: 20px;
-  padding: 5px;
 }
 .column2 {
-  border-radius: 0 8px 0 0;
+  border-radius: 0 8px 8px 0;
   background-color: rgb(194, 194, 194);
-  width: 250px;
-  height: 35px;
-  font-size: 20px;
-  padding: 5px;
 }
 .container {
   width: 500px;
@@ -121,19 +117,11 @@ form {
   overflow: visible;
 }
 
-.cyrillic {
-  display: flex;
-  font-family: "Caveat", cursive;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width: 100px;
-}
+.cyrillic,
 .translit {
   display: flex;
   font-family: "Caveat", cursive;
-  justify-content: space-between;
-  width: 95%;
+  white-space: nowrap;
 }
 /*! Мобильная версия */
 @media (min-width: 0px) and (max-width: 360px) {
@@ -149,11 +137,12 @@ form {
     justify-content: center;
   }
   .column2 {
+    display: flex;
+    justify-content: space-between;
     border: rgb(60, 117, 60) solid 1px;
-    border-radius: 0;
+    border-radius: 0 0 8px 8px;
     font-size: 20px;
     padding: 2px;
-    justify-content: center;
   }
   .translit {
     justify-content: space-evenly;
