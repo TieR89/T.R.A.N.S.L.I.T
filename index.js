@@ -30,6 +30,19 @@ button1.addEventListener('click', (event) => {
   const allNumber = document.querySelectorAll('.number');
   newNumber.innerText = `${allNumber.length}.`; // нумерация
 
+  // const newNumber = document.createElement('div');
+  // newNumber.className = 'number';
+  // newWord.appendChild(newNumber);
+  // const allNumber = document.querySelectorAll('.number');
+  // function numbers(newNumber) {
+  //   let result = 0;
+  //   for (let i = 1; i < newNumber.length; i += 1) {
+  //     result += `${i + 1}.`; // нумерация
+  //   }
+  //   return result;
+  // }
+  // console.log(numbers);
+  // newNumber.innerText = numbers(newNumber);
   //! Ввод текста при нажании на кнопку "Перевести" .btn1
   const newCyrillic = document.createElement('div');
   const addText = document.querySelector('.search').value;
@@ -37,16 +50,6 @@ button1.addEventListener('click', (event) => {
   newWord.appendChild(newCyrillic);
   newCyrillic.innerText = addText; // добавляем текст в новую строку колонки
   document.querySelector('.search').value = ''; // очищаем поле ввода текста
-
-  //!  Обрезка слов в колонке
-  // function cutWord(str) {
-  //   let result = '';
-  //   if (str.length > 6) {
-  //     result = `${str.slice(0, 6)}...`;
-  //   }
-  //   return result;
-  // }
-  // newCyrillic.innerText = cutWord(addText);
 
   //! Колонка 2
   const allColumn2 = document.querySelectorAll('.column2');
@@ -65,13 +68,14 @@ button1.addEventListener('click', (event) => {
 
   const newTranslit = document.createElement('div');
   newTranslit.className = 'translit';
+  newTranslit.innerText = addText; // добавляем текст в новую строку колонки с поисковой строки
   newColumn2.appendChild(newTranslit);
-  newTranslit.innerText = addText; // добавляем текст в новую строку колонки
 
   const Uninstall = document.querySelector('.uninstall');
   const newUninstall = Uninstall.cloneNode(true);
   newColumn2.appendChild(newUninstall); // клонируем класс uninstall с иконкой
 
+  //! !! Функция Translit
   function transliter(word) {
     let result = '';
     const converter = {
@@ -143,7 +147,6 @@ button1.addEventListener('click', (event) => {
       Ю: 'Yu',
       Я: 'Ya',
     };
-
     for (let i = 0; i < word.length; i += 1) {
       if (converter[word[i]] === undefined) {
         result += word[i];
@@ -155,11 +158,24 @@ button1.addEventListener('click', (event) => {
   }
   newTranslit.innerText = transliter(addText);
 
-  // Uninstall.addEventListener('click', (event) => {
-  //   event.preventDefault(); // чтоб страница не обновлялась
-  //   console.log('ghghbfhbvhfv');
+  //!  Обрезка слов в колонке
+  function cutWord(str) {
+    let result = '';
+    if (str.length > 6) {
+      result = `${str.slice(0, 6)}...`;
+    } else {
+      result = str;
+    }
+    return result;
+  }
+  newCyrillic.innerText = cutWord(addText);
+  //!newTranslit.innerText = cutWord(addText);
 
-  //});
+  newUninstall.addEventListener('click', (event) => {
+    event.preventDefault(); // чтоб страница не обновлялась
+    newColumn1.remove(newColumn1);
+    newColumn2.remove(newColumn2); // кнопка построчного удаления
+  });
 });
 //! Кнопка Очистить всё
 const button2 = document.querySelector('.btn2');

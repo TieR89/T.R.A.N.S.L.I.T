@@ -118,7 +118,7 @@ form {
 }
 .word {
   display: flex;
-  width: 50%;
+  min-width: 10px;
 }
 .number {
   display: flex;
@@ -130,6 +130,10 @@ form {
   display: flex;
   font-family: "Caveat", cursive;
   white-space: nowrap;
+  overflow: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-overflow: ellipsis;
 }
 /*! Мобильная версия */
 @media (min-width: 0px) and (max-width: 360px) {
