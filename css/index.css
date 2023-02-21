@@ -53,6 +53,10 @@ body {
   outline: none;
   letter-spacing: -1px; /*сжатие текста*/
 }
+.btn:hover {
+  background: rgb(1, 255, 1);
+  transition: 0.3s;
+}
 form {
   display: inline-block;
   margin: 50px;
@@ -76,12 +80,20 @@ form {
   text-align: center;
   letter-spacing: -1px;
 }
+.btn2:hover {
+  background: rgb(1, 255, 1);
+  transition: 0.3s;
+}
+.uninstall {
+  background-color: rgb(194, 194, 194);
+  border-radius: 50%;
+}
 /*! Колонки с результатами */
 .column1,
 .column2 {
   display: flex;
   justify-content: space-between;
-  border: rgb(60, 117, 60) solid 2px;
+  border: rgb(60, 117, 60) solid 1px;
   font-size: 20px;
   padding: 5px;
   height: 35px;
@@ -113,10 +125,6 @@ form {
   margin-right: 10px;
   font-family: "Caveat", cursive;
 }
-.cyrillic:hover {
-  overflow: visible;
-}
-
 .cyrillic,
 .translit {
   display: flex;
