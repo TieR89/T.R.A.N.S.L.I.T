@@ -2,13 +2,25 @@ const button1 = document.querySelector('.btn'); //! доступ к кнопке
 button1.addEventListener('click', (event) => {
   event.preventDefault(); // чтоб страница не обновлялась
 
-  const table = document.querySelector('.table'); // доступ к таблице
   //! Колонка 1
+  const container = document.querySelector('.container'); // доступ к таблице
   const allColumn1 = document.querySelectorAll('.column1');
   const newColumn1 = document.createElement('div');
+  const newColumn1Full = document.createElement('div');
   newColumn1.className = 'column1';
+  newColumn1Full.className = 'full1';
   newColumn1.style.cssText = `
   border-radius:   0  0  0 8px;
+  `;
+  newColumn1Full.style.cssText = `
+  display: none;
+  position: fixed;
+  background-color: white;
+  border: 1px solid black;
+  font-size: 25px;
+  min-height: 30px;
+  border-radius: 8px;
+  font-family: "Caveat", cursive;
   `;
   for (let i = 0; i < allColumn1.length; i += 1) {
     allColumn1[allColumn1.length - 1].style.cssText = `
@@ -16,7 +28,8 @@ button1.addEventListener('click', (event) => {
     allColumn1[0].style.cssText = `
     border-radius:  8px 0  0 0 ;`;
   }
-  table.appendChild(newColumn1); // создали первую колонку
+  container.appendChild(newColumn1); // создали первую колонку
+  container.appendChild(newColumn1Full);
 
   //! Класс Word
   const newWord = document.createElement('div');
@@ -30,50 +43,68 @@ button1.addEventListener('click', (event) => {
   const allNumber = document.querySelectorAll('.number');
   newNumber.innerText = `${allNumber.length}.`; // нумерация
 
-  // const newNumber = document.createElement('div');
-  // newNumber.className = 'number';
-  // newWord.appendChild(newNumber);
-  // const allNumber = document.querySelectorAll('.number');
-  // function numbers(newNumber) {
-  //   let result = 0;
-  //   for (let i = 1; i < newNumber.length; i += 1) {
-  //     result += `${i + 1}.`; // нумерация
-  //   }
-  //   return result;
-  // }
-  // console.log(numbers);
-  // newNumber.innerText = numbers(newNumber);
-  //! Ввод текста при нажании на кнопку "Перевести" .btn1
+  //! Ввод текста при нажатии на кнопку "Перевести" .btn1
   const newCyrillic = document.createElement('div');
   const addText = document.querySelector('.search').value;
   newCyrillic.className = 'cyrillic';
   newWord.appendChild(newCyrillic);
   newCyrillic.innerText = addText; // добавляем текст в новую строку колонки
+  newColumn1Full.innerText = addText;
   document.querySelector('.search').value = ''; // очищаем поле ввода текста
 
   //! Колонка 2
   const allColumn2 = document.querySelectorAll('.column2');
   const newColumn2 = document.createElement('div');
+  const newColumn2Full = document.createElement('div');
   newColumn2.className = 'column2';
+  newColumn2Full.className = 'full2';
   newColumn2.style.cssText = `
   border-radius:  0 0 8px 0; 
   `; // при добавлении текста меняем углы первой строки
+  newColumn2Full.style.cssText = `
+  display: none;
+  position: fixed;
+  background-color: white;
+  border: 1px solid black;
+  font-size: 25px;
+  min-height: 30px;
+  border-radius: 8px;
+  font-family: "Caveat", cursive;
+  `;
   for (let i = 0; i < allColumn2.length; i += 1) {
     allColumn2[allColumn2.length - 1].style.cssText = `
-    border-radius:  0 0px 0 0 ;`;
+    border-radius:  0 0px 0 0 ;`; // средние строки без скругления
     allColumn2[0].style.cssText = `
     border-radius:  0 8px 0 0 ;`; // в колонках скругляем углы при добавлении текста
   }
-  table.appendChild(newColumn2);
+  container.appendChild(newColumn2);
+  container.appendChild(newColumn2Full);
 
   const newTranslit = document.createElement('div');
   newTranslit.className = 'translit';
   newTranslit.innerText = addText; // добавляем текст в новую строку колонки с поисковой строки
   newColumn2.appendChild(newTranslit);
 
+  //! Кнопка Удалить строку
   const Uninstall = document.querySelector('.uninstall');
   const newUninstall = Uninstall.cloneNode(true);
   newColumn2.appendChild(newUninstall); // клонируем класс uninstall с иконкой
+
+  newUninstall.addEventListener('click', () => {
+    event.preventDefault(); // чтоб страница не обновлялась
+    newColumn1.remove(newColumn1);
+    newColumn2.remove(newColumn2); // кнопка построчного удаления
+    newColumn2Full.remove(newColumn2Full);
+
+    //! Обновляем нумерацию
+    const allNumber = document.querySelectorAll('.number');
+    const updateNumbers = () => {
+      for (let i = 0; i < allNumber.length; i += 1) {
+        allNumber[i].innerText = `${i + 1}.`;
+      }
+    };
+    updateNumbers();
+  });
 
   //! !! Функция Translit
   function transliter(word) {
@@ -111,7 +142,7 @@ button1.addEventListener('click', (event) => {
       ъ: '',
       э: 'e',
       ю: 'yu',
-      я: 'ya',
+      я: 'ia',
 
       А: 'A',
       Б: 'B',
@@ -145,7 +176,7 @@ button1.addEventListener('click', (event) => {
       Ъ: '',
       Э: 'E',
       Ю: 'Yu',
-      Я: 'Ya',
+      Я: 'ia',
     };
     for (let i = 0; i < word.length; i += 1) {
       if (converter[word[i]] === undefined) {
@@ -157,32 +188,75 @@ button1.addEventListener('click', (event) => {
     return result;
   }
   newTranslit.innerText = transliter(addText);
+  newColumn2Full.innerText = newTranslit.innerText;
+
+  //! Подсказки
+  if (newTranslit.innerText.length > 12) {
+    newColumn1.addEventListener('mouseover', () => {
+      tooltipToggle(newColumn1Full, 'block');
+    });
+    newColumn2.addEventListener('mouseover', () => {
+      tooltipToggle(newColumn2Full, 'block');
+    });
+
+    newColumn1.addEventListener('mouseleave', () => {
+      tooltipToggle(newColumn1Full, 'none');
+    });
+    newColumn2.addEventListener('mouseleave', () => {
+      tooltipToggle(newColumn2Full, 'none');
+    });
+
+    function tooltipToggle(elem, status) {
+      elem.style.display = status;
+    }
+
+    // addEventListener('unload', (event) => {});
+    newColumn1.addEventListener('mousemove', (event) => {
+      const wordWidth = event.target.offsetWidth;
+      const tooltipWidth = newColumn1Full.offsetWidth;
+      const tooltipHeight = newColumn1Full.offsetHeight;
+      const tooltipTop = event.clientY - tooltipHeight - 10;
+      const tooltipLeft = event.clientX - tooltipWidth / 2 + wordWidth / 2;
+      newColumn1Full.style.top = `${tooltipTop}px`;
+      newColumn1Full.style.left = `${tooltipLeft}px`;
+    });
+    newColumn2.addEventListener('mousemove', (event) => {
+      const wordWidth = event.target.offsetWidth;
+      const tooltipWidth = newColumn2Full.offsetWidth;
+      const tooltipHeight = newColumn2Full.offsetHeight;
+      const tooltipTop = event.clientY - tooltipHeight - 10;
+      const tooltipLeft = event.clientX - tooltipWidth / 2 + wordWidth / 2;
+      newColumn2Full.style.top = `${tooltipTop}px`;
+      newColumn2Full.style.left = `${tooltipLeft}px`;
+    });
+  }
 
   //!  Обрезка слов в колонке
   function cutWord(str) {
     let result = '';
-    if (str.length > 6) {
-      result = `${str.slice(0, 6)}...`;
+    if (str.length > 12) {
+      result = `${str.slice(0, 12)}...`;
     } else {
       result = str;
     }
     return result;
   }
   newCyrillic.innerText = cutWord(addText);
-  //!newTranslit.innerText = cutWord(addText);
-
-  newUninstall.addEventListener('click', (event) => {
-    event.preventDefault(); // чтоб страница не обновлялась
-    newColumn1.remove(newColumn1);
-    newColumn2.remove(newColumn2); // кнопка построчного удаления
-  });
+  newTranslit.innerText = cutWord(newTranslit.innerText);
 });
+
 //! Кнопка Очистить всё
 const button2 = document.querySelector('.btn2');
 button2.addEventListener('click', () => {
-  // при очистке намеренно обносляем страницу, чтобы border-radius колонки принял исходное положение
-  const table = document.querySelector('.table'); // доступ к таблице
-  while (table.children.length > 2) {
-    table.removeChild(table.lastChild); // очистить всё, кроме 2-х элементов
+  event.preventDefault();
+  const container = document.querySelector('.container'); // доступ к таблице
+  while (container.children.length > 2) {
+    container.removeChild(container.lastChild); // очистить всё, кроме 2-х элементов
   }
+  const allColumn1 = document.querySelectorAll('.column1');
+  const allColumn2 = document.querySelectorAll('.column2');
+  allColumn2[0].style.cssText = `
+    border-radius:  0 8px 8px 0;`; // в колонках скругляем углы при очистке
+  allColumn1[0].style.cssText = `
+    border-radius:  8px 0 0 8px;`; // в колонках скругляем углы при очистке
 });

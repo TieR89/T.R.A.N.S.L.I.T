@@ -26,6 +26,11 @@ body {
   font-weight: bolder;
   color: rgb(133, 29, 98);
   margin: 50px;
+  transition: 0.5s;
+}
+.header:hover {
+  color: rgb(248, 74, 190);
+  transition: 0.5s;
 }
 /*! Поисковая строка */
 .search {
@@ -52,6 +57,7 @@ body {
   border-radius: 8px;
   outline: none;
   letter-spacing: -1px; /*сжатие текста*/
+  transition: 0.3s;
 }
 .btn:hover {
   background: rgb(1, 255, 1);
@@ -79,14 +85,33 @@ form {
   vertical-align: middle;
   text-align: center;
   letter-spacing: -1px;
+  transition: 0.3s;
 }
 .btn2:hover {
   background: rgb(1, 255, 1);
   transition: 0.3s;
 }
 .uninstall {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
   background-color: rgb(194, 194, 194);
   border-radius: 50%;
+  width: 10%;
+  height: 80%;
+  margin: 3px;
+  font-size: 40px;
+}
+.up {
+  position: relative;
+  top: -2.5px;
+  color: white;
+  transition: 0.3s;
+}
+.up:hover {
+  color: black;
+  transition: 0.3s;
 }
 /*! Колонки с результатами */
 .column1,
@@ -94,8 +119,8 @@ form {
   display: flex;
   justify-content: space-between;
   border: rgb(60, 117, 60) solid 1px;
-  font-size: 20px;
-  padding: 5px;
+  font-size: 24px;
+  padding: 1px;
   height: 35px;
   width: 250px;
 }
@@ -108,14 +133,12 @@ form {
   background-color: rgb(194, 194, 194);
 }
 .container {
-  width: 500px;
-  height: 200px;
-}
-.table {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  width: 500px;
 }
+
 .word {
   display: flex;
   min-width: 10px;
@@ -127,6 +150,7 @@ form {
 }
 .cyrillic,
 .translit {
+  position: relative;
   display: flex;
   font-family: "Caveat", cursive;
   white-space: nowrap;
@@ -136,8 +160,8 @@ form {
   text-overflow: ellipsis;
 }
 /*! Мобильная версия */
-@media (min-width: 0px) and (max-width: 360px) {
-  .table {
+@media (min-width: 0px) and (max-width: 500px) {
+  .container {
     flex-direction: column;
     align-items: center;
   }
